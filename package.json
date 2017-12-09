@@ -1,0 +1,32 @@
+{
+	"name": "hafas-collect-departures-at",
+	"description": "Utility to collect departures, using any HAFAS client.",
+	"version": "0.1.0",
+	"main": "index.js",
+	"files": [
+		"index.js"
+	],
+	"keywords": [
+		"hafas",
+		"public transport",
+		"transit"
+	],
+	"author": "Jannis R <mail@jannisr.de>",
+	"homepage": "https://github.com/derhuerst/hafas-collect-departures-at",
+	"repository": "derhuerst/hafas-collect-departures-at",
+	"bugs": "https://github.com/derhuerst/hafas-collect-departures-at/issues",
+	"license": "ISC",
+	"engines": {
+		"node": ">=6"
+	},
+	"dependencies": {
+	},
+	"devDependencies": {
+		"tap-min": "^1.2.2",
+		"tape": "^4.8.0"
+	},
+	"scripts": {
+		"test": "node test.js | tap-min",
+		"prepublishOnly": "npm test"
+	}
+}
