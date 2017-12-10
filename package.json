@@ -20,6 +20,7 @@
 		"node": ">=6"
 	},
 	"dependencies": {
+		"lodash.maxby": "^4.6.0"
 	},
 	"devDependencies": {
 		"tap-min": "^1.2.2",
