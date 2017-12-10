@@ -18,7 +18,38 @@ npm install hafas-collect-departures-at
 ## Usage
 
 ```js
-todo
+const vbb = require('vbb-hafas')
+const createCollectDeps = require('hafas-collect-departures-at')
+
+const fooStation = '900000100001'
+const collectDeps = createCollectDeps(vbb.departures)
+const depsAtFoo = collectDeps(fooStation, Date.now())
+
+const fetchDepsTwice = async () => {
+	// this looks awkward because async iteration is not stable yet
+	const iterator = depsAtFoo[Symbol.iterator]()
+	let iterations = 0
+	while (++iterations <= 2) {
+		const result = await iterator.next()
+		const deps = result.value
+		console.log(deps)
+	}
+}
+
+fetchDepsTwice()
+.catch(console.error)
+```
+
+If you're brave enough to use [Babel](https://babeljs.io) with [async generators plugin](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-plugin-proposal-async-generator-functions) (currently in [the stage 3 preset](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-preset-stage-3)), you can write `fetchDepsTwice` like this:
+
+```js
+const fetchDepsTwice = async () => {
+	let iterations = 0
+	for await (let deps of depsAtFoo) {
+		if (++iterations > 2) break
+		console.log(deps)
+	}
+}
 ```
 
 
