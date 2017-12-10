@@ -52,6 +52,23 @@ const fetchDepsTwice = async () => {
 }
 ```
 
+### `while` helper
+
+If you don't like to use the async iteration syntax, there's a helper that works like a regular [`while` loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/while):
+
+```js
+const createCollectWhile = require('hafas-collect-departures-at/while')
+
+const shouldPick = (dep, i) => i < 10
+
+const collectWhile = createCollectWhile(vbb.departures)
+collectWhile(fooStation, Date.now(), shouldPick)
+.then(console.log)
+.catch(console.error)
+```
+
+`collectWhile()` returns a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/promise) that will resolve with an *array of 10* items.
+
 
 ## Contributing
 
