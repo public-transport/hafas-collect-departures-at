@@ -1,5 +1,7 @@
 # hafas-collect-departures-at
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/derhuerst/hafas-collect-departures-at.svg)](https://greenkeeper.io/)
+
 **Utility to collect departures, using any HAFAS client.**
 
 [![npm version](https://img.shields.io/npm/v/hafas-collect-departures-at.svg)](https://www.npmjs.com/package/hafas-collect-departures-at)
