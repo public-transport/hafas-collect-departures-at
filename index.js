@@ -35,7 +35,7 @@ const createCollectDeps = (fetchDepartures) => {
 							return Number.isNaN(w) ? 0 : w
 						})
 						when = +new Date(last.when)
-					}
+					} else when += duration * 60 * 1000
 
 					return {done: false, value: deps}
 				})
