@@ -1,7 +1,7 @@
 {
 	"name": "hafas-collect-departures-at",
 	"description": "Utility to collect departures, using any HAFAS client.",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"main": "index.js",
 	"files": [
 		"index.js",
@@ -21,10 +21,10 @@
 		"node": ">=6"
 	},
 	"dependencies": {
+		"co": "^4.6.0",
 		"lodash.maxby": "^4.6.0"
 	},
 	"devDependencies": {
-		"co": "^4.6.0",
 		"floordate": "^3.0.0",
 		"is-promise": "^2.1.0",
 		"sinon": "^4.1.3",
