@@ -3,6 +3,7 @@
 const maxBy = require('lodash.maxby')
 
 const validId = /^\d{9,12}$/
+const minute = 60 * 1000
 
 const createCollectDeps = (fetchDepartures) => {
 	if ('function' !== typeof fetchDepartures) {
@@ -34,8 +35,14 @@ const createCollectDeps = (fetchDepartures) => {
 							const w = +new Date(d.when)
 							return Number.isNaN(w) ? 0 : w
 						})
-						when = +new Date(last.when)
-					} else when += duration * 60 * 1000
+
+						// The HAFAS APIs return departures up to 59s earlier.
+						// To prevent the collection from "getting stuck",
+						// we increase `when` by a minute.
+						const lastWhen = +new Date(last.when)
+						if (lastWhen === when) when += minute
+						else when = lastWhen
+					} else when += duration * minute
 
 					return {done: false, value: deps}
 				})

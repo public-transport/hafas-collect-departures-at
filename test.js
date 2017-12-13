@@ -113,3 +113,26 @@ test('increases when even if 0 departures', co.wrap(function* (t) {
 
 	t.end()
 }))
+
+// todo: move to async test fn once Node 6 is out of active LTS
+test('increases `when` even if last dep has equal when', co.wrap(function* (t) {
+	const initialWhen = Date.now()
+	let call = 0, lastWhen = initialWhen
+	const fetchDeps = (s, opt) => {
+		if (call++ > 0) t.ok(opt.when > lastWhen)
+		lastWhen = opt.when
+
+		return Promise.resolve([
+			mockDeparture(friedrichsstr, opt.when)
+		])
+	}
+
+	const depsAt = createCollectDeps(fetchDeps)(friedrichsstr, initialWhen)
+	// todo: use async iteration once supported
+	// see https://github.com/tc39/proposal-async-iteration
+	const iterator = depsAt[Symbol.iterator]()
+	let iterations = 0
+	while (++iterations <= 3) yield iterator.next()
+
+	t.end()
+}))

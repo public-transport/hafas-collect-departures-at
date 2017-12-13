@@ -1,7 +1,7 @@
 {
 	"name": "hafas-collect-departures-at",
 	"description": "Utility to collect departures, using any HAFAS client.",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"main": "index.js",
 	"files": [
 		"index.js",
