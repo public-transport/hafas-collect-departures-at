@@ -52,7 +52,7 @@ const createCollectDeps = (fetchDepartures) => {
 		}
 
 		const iterable = {}
-		iterable[Symbol.iterator] = makeIterator
+		iterable[Symbol.asyncIterator] = makeIterator
 		return iterable
 	}
 	return collectDeps

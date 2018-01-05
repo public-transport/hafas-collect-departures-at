@@ -27,7 +27,7 @@ const depsAtFoo = collectDeps(fooStation, Date.now())
 
 const fetchDepsTwice = async () => {
 	// this looks awkward because async iteration is not stable yet
-	const iterator = depsAtFoo[Symbol.iterator]()
+	const iterator = depsAtFoo[Symbol.asyncIterator]()
 	let iterations = 0
 	while (++iterations <= 2) {
 		const result = await iterator.next()
@@ -40,7 +40,7 @@ fetchDepsTwice()
 .catch(console.error)
 ```
 
-If you're brave enough to use [Babel](https://babeljs.io) with [async generators plugin](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-plugin-proposal-async-generator-functions) (currently in [the stage 3 preset](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-preset-stage-3)), you can write `fetchDepsTwice` like this:
+If you're brave enough to use [Babel](https://babeljs.io) with [async generators plugin](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-plugin-proposal-async-generator-functions) (currently in [the stage 3 preset](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-preset-stage-3)), you can use [async iteration](http://2ality.com/2017/12/for-await-of-sync-iterables.html) write `fetchDepsTwice` like this:
 
 ```js
 const fetchDepsTwice = async () => {
@@ -51,6 +51,8 @@ const fetchDepsTwice = async () => {
 	}
 }
 ```
+
+Node.js 9 also supports this with the `--harmony-async-iteration` flag.
 
 ### `while` helper
 

@@ -47,7 +47,7 @@ test('returns an async iterable', (t) => {
 	t.notOk(Array.isArray(deps), 'deps should be an obj')
 
 	// todo: Symbol.asyncIterator ?
-	const makeIterator = deps[Symbol.iterator]
+	const makeIterator = deps[Symbol.asyncIterator]
 	t.equal(typeof makeIterator, 'function', 'deps should have an iterator fn')
 
 	const iterator = makeIterator()
@@ -79,7 +79,7 @@ test('properly collects the departures', co.wrap(function* (t) {
 
 	// todo: use async iteration once supported
 	// see https://github.com/tc39/proposal-async-iteration
-	const iterator = depsAt[Symbol.iterator]()
+	const iterator = depsAt[Symbol.asyncIterator]()
 	let iterations = 0
 	while (++iterations <= 2) {
 		const deps = (yield iterator.next()).value
@@ -107,7 +107,7 @@ test('increases when even if 0 departures', co.wrap(function* (t) {
 
 	// todo: use async iteration once supported
 	// see https://github.com/tc39/proposal-async-iteration
-	const iterator = depsAt[Symbol.iterator]()
+	const iterator = depsAt[Symbol.asyncIterator]()
 	let iterations = 0
 	while (++iterations <= 3) yield iterator.next()
 
@@ -130,7 +130,7 @@ test('increases `when` even if last dep has equal when', co.wrap(function* (t) {
 	const depsAt = createCollectDeps(fetchDeps)(friedrichsstr, initialWhen)
 	// todo: use async iteration once supported
 	// see https://github.com/tc39/proposal-async-iteration
-	const iterator = depsAt[Symbol.iterator]()
+	const iterator = depsAt[Symbol.asyncIterator]()
 	let iterations = 0
 	while (++iterations <= 3) yield iterator.next()
 
