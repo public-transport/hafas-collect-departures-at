@@ -13,7 +13,7 @@ const createCollectWhile = (departures) => {
 		}
 
 		const depsAt = collectDeps(id, when)
-		const iterator = depsAt[Symbol.iterator]()
+		const iterator = depsAt[Symbol.asyncIterator]()
 		const collected = []
 
 		// todo: move to async test fn once Node 6 is out of active LTS
