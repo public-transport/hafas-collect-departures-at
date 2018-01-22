@@ -2,7 +2,6 @@
 
 const maxBy = require('lodash.maxby')
 
-const validId = /^\d{9,12}$/
 const minute = 60 * 1000
 
 const createCollectDeps = (fetchDepartures) => {
@@ -11,8 +10,8 @@ const createCollectDeps = (fetchDepartures) => {
 	}
 
 	const collectDeps = (id, initialWhen) => {
-		if ('string' !== typeof id || !validId.test(id)) {
-			throw new Error('id must be a string with 9 to 12 digits.')
+		if ('string' !== typeof id || !id) {
+			throw new Error('id must be a non-empty string')
 		}
 		initialWhen = +initialWhen
 		if (
