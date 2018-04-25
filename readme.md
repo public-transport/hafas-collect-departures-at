@@ -6,6 +6,7 @@
 [![build status](https://api.travis-ci.org/derhuerst/hafas-collect-departures-at.svg?branch=master)](https://travis-ci.org/derhuerst/hafas-collect-departures-at)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/hafas-collect-departures-at.svg)
 [![chat on gitter](https://badges.gitter.im/derhuerst.svg)](https://gitter.im/derhuerst)
+[![support me on Patreon](https://img.shields.io/badge/support%20me-on%20patreon-fa7664.svg)](https://patreon.com/derhuerst)
 
 
 ## Installing
@@ -26,12 +27,9 @@ const collectDeps = createCollectDeps(vbb.departures)
 const depsAtFoo = collectDeps(fooStation, Date.now())
 
 const fetchDepsTwice = async () => {
-	// this looks awkward because async iteration is not stable yet
-	const iterator = depsAtFoo[Symbol.asyncIterator]()
 	let iterations = 0
-	while (++iterations <= 2) {
-		const result = await iterator.next()
-		const deps = result.value
+	for await (let deps of depsAtFoo) {
+		if (++iterations > 2) break
 		console.log(deps)
 	}
 }
@@ -40,19 +38,21 @@ fetchDepsTwice()
 .catch(console.error)
 ```
 
-If you're brave enough to use [Babel](https://babeljs.io) with [async generators plugin](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-plugin-proposal-async-generator-functions) (currently in [the stage 3 preset](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-preset-stage-3)), you can use [async iteration](http://2ality.com/2017/12/for-await-of-sync-iterables.html) write `fetchDepsTwice` like this:
+Keep in mind that the example above only works in Node 10+ (and Node 9 with the `--harmony-async-iteration` flag), because it uses [async iteration](http://2ality.com/2017/12/for-await-of-sync-iterables.html).
+
+You can also use [Babel](https://babeljs.io) with the [async generators plugin](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-plugin-proposal-async-generator-functions) (currently in [the stage 3 preset](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-preset-stage-3)) to use this syntax. Alternatively, you can write `fetchDepsTwice` without async iteration:
 
 ```js
 const fetchDepsTwice = async () => {
+	const iterator = depsAtFoo[Symbol.asyncIterator]()
 	let iterations = 0
-	for await (let deps of depsAtFoo) {
-		if (++iterations > 2) break
+	while (++iterations <= 2) {
+		const result = await iterator.next()
+		const deps = result.value
 		console.log(deps)
 	}
 }
 ```
-
-Node.js 9 also supports this with the `--harmony-async-iteration` flag.
 
 ### `while` helper
 
