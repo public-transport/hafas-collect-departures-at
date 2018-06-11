@@ -27,7 +27,7 @@
 	"devDependencies": {
 		"floordate": "^3.0.0",
 		"is-promise": "^2.1.0",
-		"sinon": "^5.0.0",
+		"sinon": "^6.0.0",
 		"tap-min": "^1.2.2",
 		"tape": "^4.8.0",
 		"tape-promise": "^3.0.0"
