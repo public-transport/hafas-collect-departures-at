@@ -4,7 +4,7 @@ const maxBy = require('lodash.maxby')
 
 const minute = 60 * 1000
 
-const createCollectDeps = (fetchDepartures) => {
+const createCollectDeps = (fetchDepartures, opt = {}) => {
 	if ('function' !== typeof fetchDepartures) {
 		throw new Error('fetchDepartures must be a function.')
 	}
@@ -26,7 +26,8 @@ const createCollectDeps = (fetchDepartures) => {
 			let when = initialWhen
 
 			const iterate = (duration = 10) => {
-				return fetchDepartures(id, {when, duration})
+				const _opt = Object.assign({}, opt, {when, duration})
+				return fetchDepartures(id, _opt)
 				.then((deps) => {
 					// todo: warn somehow if 0 departures
 					if (deps.length > 0) {
