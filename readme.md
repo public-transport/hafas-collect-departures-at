@@ -19,11 +19,12 @@ npm install hafas-collect-departures-at
 ## Usage
 
 ```js
-const vbb = require('vbb-hafas')
+const createHafas = require('vbb-hafas')
 const createCollectDeps = require('hafas-collect-departures-at')
 
 const fooStation = '900000100001'
-const collectDeps = createCollectDeps(vbb.departures)
+const hafas = createHafas('my-awesome-program')
+const collectDeps = createCollectDeps(hafas.departures)
 const depsAtFoo = collectDeps(fooStation, Date.now())
 
 const fetchDepsTwice = async () => {

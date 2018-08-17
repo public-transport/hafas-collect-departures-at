@@ -1,12 +1,13 @@
 'use strict'
 
-const vbb = require('vbb-hafas')
+const createHafas = require('vbb-hafas')
 const createCollectDeps = require('.')
 
 const friedrichsstr = '900000100001'
 const when = 1519977600000 // 2018-03-02T08:00:00.000Z
 
-const collectDeps = createCollectDeps(vbb.departures)
+const hafas = createHafas('hafas-collect-departures-at example')
+const collectDeps = createCollectDeps(hafas.departures)
 const depsAtFriedrichstr = collectDeps(friedrichsstr, when)
 
 const fetchDepsTwice = async () => {
