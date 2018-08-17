@@ -1,7 +1,7 @@
 {
 	"name": "hafas-collect-departures-at",
 	"description": "Utility to collect departures, using any HAFAS client.",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"main": "index.js",
 	"files": [
 		"index.js",
@@ -30,7 +30,8 @@
 		"sinon": "^6.0.0",
 		"tap-min": "^1.2.2",
 		"tape": "^4.8.0",
-		"tape-promise": "^3.0.0"
+		"tape-promise": "^3.0.0",
+		"vbb-hafas": "^5.0.1"
 	},
 	"peerDependencies": {
 		"hafas-client": "^3.0.0"

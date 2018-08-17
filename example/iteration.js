@@ -1,24 +1,22 @@
 'use strict'
 
 const createHafas = require('vbb-hafas')
-const createCollectDeps = require('.')
+const createCollectDeps = require('..')
 
 const friedrichsstr = '900000100001'
-const when = 1519977600000 // 2018-03-02T08:00:00.000Z
+const when = 1534579200000 // 2018-08-18T10:00:00+0200
 
 const hafas = createHafas('hafas-collect-departures-at example')
 const collectDeps = createCollectDeps(hafas.departures)
 const depsAtFriedrichstr = collectDeps(friedrichsstr, when)
 
 const fetchDepsTwice = async () => {
-	// todo: use async iteration once supported
-	// see https://github.com/tc39/proposal-async-iteration
-	const iterator = depsAtFriedrichstr[Symbol.iterator]()
 	let iterations = 0
-	while (++iterations <= 2) {
-		const result = await iterator.next()
-		const deps = result.value
+	// only works in Node 10+, because it uses async iteration
+	// see https://github.com/tc39/proposal-async-iteration
+	for await (let deps of depsAtFriedrichstr) {
 		console.log(deps)
+		if (++iterations <= 2) break
 	}
 }
 
