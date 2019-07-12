@@ -1,8 +1,8 @@
 'use strict'
 
+const {DateTime} = require('luxon')
 const tapePromise = require('tape-promise').default
 const tape = require('tape')
-const floorDate = require('floordate')
 const isPromise = require('is-promise')
 const co = require('co')
 const sinon = require('sinon')
@@ -17,7 +17,10 @@ const minute = 60 * 1000
 const hour = 60 * minute
 const week = 7 * 24 * hour
 // next Monday
-const when = new Date(+floorDate(new Date(), 'week') + week + 10 * hour)
+const when = DateTime.fromMillis(Date.now(), {
+	zone: 'Europe/Berlin',
+	locale: 'de-DE',
+}).startOf('week').plus({weeks: 1, hours: 10}).toJSDate()
 
 const mockDeparture = (id, t) => ({
 	station: {type: 'station', id, name: 'foo'},
@@ -44,7 +47,7 @@ test('throws with invalid usage', (t) => {
 test('returns an async iterable', (t) => {
 	const deps = mockedCollectDeps(friedrichsstr, when)
 	t.equal(typeof deps, 'object', 'deps should be an obj')
-	t.notOk(Array.isArray(deps), 'deps should be an obj')
+	t.notOk(Array.isArray(deps), 'deps should not be an array')
 
 	// todo: Symbol.asyncIterator ?
 	const makeIterator = deps[Symbol.asyncIterator]
@@ -52,7 +55,7 @@ test('returns an async iterable', (t) => {
 
 	const iterator = makeIterator()
 	t.equal(typeof iterator, 'object', 'iterator should be an obj')
-	t.notOk(Array.isArray(iterator), 'iterator should be an obj')
+	t.notOk(Array.isArray(iterator), 'iterator should not be an array')
 
 	t.equal(typeof iterator.next, 'function', 'iterator should have a next fn')
 

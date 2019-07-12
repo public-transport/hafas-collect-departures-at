@@ -25,10 +25,10 @@
 		"lodash.maxby": "^4.6.0"
 	},
 	"devDependencies": {
-		"floordate": "^3.0.0",
 		"is-promise": "^2.1.0",
+		"luxon": "^1.17.1",
 		"sinon": "^7.2.3",
-		"tap-min": "^1.2.2",
+		"tap-min": "^2.0.0",
 		"tape": "^4.8.0",
 		"tape-promise": "^4.0.0",
 		"vbb-hafas": "^6.0.0"
