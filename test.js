@@ -24,10 +24,10 @@ const mockDeparture = (id, t) => ({
 	when: new Date(t).toISOString()
 })
 const mockDepartures = (id, opt) => Promise.resolve([
-	mockDeparture(id, 1 * minute + opt.when),
-	mockDeparture(id, 2 * minute + opt.when),
-	mockDeparture(id, 4 * minute + opt.when),
-	mockDeparture(id, 7 * minute + opt.when)
+	mockDeparture(id, 1 * minute + (+new Date(opt.when))),
+	mockDeparture(id, 2 * minute + (+new Date(opt.when))),
+	mockDeparture(id, 4 * minute + (+new Date(opt.when))),
+	mockDeparture(id, 7 * minute + (+new Date(opt.when)))
 ])
 const mockedCollectDeps = createCollectDeps(mockDepartures)
 
@@ -67,7 +67,7 @@ test('returns an async iterable', (t) => {
 test('properly collects the departures', co.wrap(function* (t) {
 	const depsA = yield mockDepartures(friedrichsstr, {when: +when})
 	const depsB = yield mockDepartures(friedrichsstr, {
-		when: 7 * minute + (+when)
+		when: 7 * minute + (+new Date(when))
 	})
 	const fetchDeps = sinon.stub()
 	fetchDeps.onCall(0).resolves(depsA)

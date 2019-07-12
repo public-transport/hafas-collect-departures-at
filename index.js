@@ -26,7 +26,7 @@ const createCollectDeps = (fetchDepartures, opt = {}) => {
 			let when = initialWhen
 
 			const iterate = (duration = 10) => {
-				const _opt = Object.assign({}, opt, {when, duration})
+				const _opt = Object.assign({}, opt, {when: new Date(when), duration})
 				return fetchDepartures(id, _opt)
 				.then((deps) => {
 					// todo: warn somehow if 0 departures
