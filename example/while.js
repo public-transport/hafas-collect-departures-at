@@ -5,7 +5,7 @@ const createCollectWhile = require('../while')
 
 const hafas = createHafas('hafas-collect-departures-at example')
 const friedrichsstr = '900000100001'
-const when = 1534579200000 // 2018-08-18T10:00:00+0200
+const when = 1563177600000 // 2019-07-15T10:00:00+0200
 
 const collectWhile = createCollectWhile(hafas.departures)
 
