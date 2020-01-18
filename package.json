@@ -18,10 +18,9 @@
 	"bugs": "https://github.com/derhuerst/hafas-collect-departures-at/issues",
 	"license": "ISC",
 	"engines": {
-		"node": ">=8"
+		"node": ">=10"
 	},
 	"dependencies": {
-		"co": "^4.6.0",
 		"lodash.maxby": "^4.6.0"
 	},
 	"devDependencies": {

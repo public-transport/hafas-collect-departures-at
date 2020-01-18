@@ -1,7 +1,5 @@
 'use strict'
 
-const co = require('co')
-
 const createCollectDeps = require('.')
 
 const createCollectWhile = (departures) => {
@@ -16,20 +14,15 @@ const createCollectWhile = (departures) => {
 		const iterator = depsAt[Symbol.asyncIterator]()
 		const collected = []
 
-		// todo: move to async test fn once Node 6 is out of active LTS
-		return co(function* loop () {
-			// todo: use async iteration once supported
-			// see https://github.com/tc39/proposal-async-iteration
-			while (true) {
-				const result = yield iterator.next()
-				const deps = result.value
-
+		const loop = async () => {
+			for await (const deps of depsAt) {
 				for (let dep of deps) {
 					if (!predicate(dep, collected.length)) return collected
 					collected.push(dep)
 				}
 			}
-		})
+		}
+		return loop()
 	}
 	return collectWhile
 }

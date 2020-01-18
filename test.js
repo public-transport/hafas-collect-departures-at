@@ -4,7 +4,6 @@ const {DateTime} = require('luxon')
 const tapePromise = require('tape-promise').default
 const tape = require('tape')
 const isPromise = require('is-promise')
-const co = require('co')
 const sinon = require('sinon')
 
 const createCollectDeps = require('.')
@@ -66,10 +65,9 @@ test('returns an async iterable', (t) => {
 	t.end()
 })
 
-// todo: move to async test fn once Node 6 is out of active LTS
-test('properly collects the departures', co.wrap(function* (t) {
-	const depsA = yield mockDepartures(friedrichsstr, {when: +when})
-	const depsB = yield mockDepartures(friedrichsstr, {
+test('properly collects the departures', async (t) => {
+	const depsA = await mockDepartures(friedrichsstr, {when: +when})
+	const depsB = await mockDepartures(friedrichsstr, {
 		when: 7 * minute + (+new Date(when))
 	})
 	const fetchDeps = sinon.stub()
@@ -80,22 +78,18 @@ test('properly collects the departures', co.wrap(function* (t) {
 	const depsAt = createCollectDeps(fetchDeps)(friedrichsstr, when)
 	let result = []
 
-	// todo: use async iteration once supported
-	// see https://github.com/tc39/proposal-async-iteration
-	const iterator = depsAt[Symbol.asyncIterator]()
 	let iterations = 0
-	while (++iterations <= 2) {
-		const deps = (yield iterator.next()).value
+	for await (const deps of depsAt) {
 		result = result.concat(deps)
+		if (++iterations >= 2) break
 	}
 
 	const expected = depsA.concat(depsB)
 	t.deepEqual(result, expected)
 	t.end()
-}))
+})
 
-// todo: move to async test fn once Node 6 is out of active LTS
-test('increases when even if 0 departures', co.wrap(function* (t) {
+test('increases when even if 0 departures', async (t) => {
 	const initialWhen = Date.now()
 	let call = 0, lastWhen = initialWhen
 	const fetchDeps = (s, opt) => {
@@ -108,17 +102,15 @@ test('increases when even if 0 departures', co.wrap(function* (t) {
 
 	const depsAt = createCollectDeps(fetchDeps)(friedrichsstr, initialWhen)
 
-	// todo: use async iteration once supported
-	// see https://github.com/tc39/proposal-async-iteration
-	const iterator = depsAt[Symbol.asyncIterator]()
 	let iterations = 0
-	while (++iterations <= 3) yield iterator.next()
+	for await (const _ of depsAt) {
+		if (++iterations > 3) break
+	}
 
 	t.end()
-}))
+})
 
-// todo: move to async test fn once Node 6 is out of active LTS
-test('increases `when` even if last dep has equal when', co.wrap(function* (t) {
+test('increases `when` even if last dep has equal when', async (t) => {
 	const initialWhen = Date.now()
 	let call = 0, lastWhen = initialWhen
 	const fetchDeps = (s, opt) => {
@@ -131,11 +123,10 @@ test('increases `when` even if last dep has equal when', co.wrap(function* (t) {
 	}
 
 	const depsAt = createCollectDeps(fetchDeps)(friedrichsstr, initialWhen)
-	// todo: use async iteration once supported
-	// see https://github.com/tc39/proposal-async-iteration
-	const iterator = depsAt[Symbol.asyncIterator]()
 	let iterations = 0
-	while (++iterations <= 3) yield iterator.next()
+	for await (const _ of depsAt) {
+		if (++iterations > 3) break
+	}
 
 	t.end()
-}))
+})

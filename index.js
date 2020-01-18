@@ -25,27 +25,26 @@ const createCollectDeps = (fetchDepartures, opt = {}) => {
 		const makeIterator = () => {
 			let when = initialWhen
 
-			const iterate = (duration = 10) => {
+			const iterate = async (duration = 10) => {
 				const _opt = Object.assign({}, opt, {when: new Date(when), duration})
-				return fetchDepartures(id, _opt)
-				.then((deps) => {
-					// todo: warn somehow if 0 departures
-					if (deps.length > 0) {
-						const last = maxBy(deps, (d) => {
-							const w = +new Date(d.when)
-							return Number.isNaN(w) ? 0 : w
-						})
+				const deps = await fetchDepartures(id, _opt)
 
-						// The HAFAS APIs return departures up to 59s earlier.
-						// To prevent the collection from "getting stuck",
-						// we increase `when` by a minute.
-						const lastWhen = +new Date(last.when)
-						if (lastWhen === when) when += minute
-						else when = lastWhen
-					} else when += duration * minute
+				// todo: warn somehow if 0 departures
+				if (deps.length > 0) {
+					const last = maxBy(deps, (d) => {
+						const w = +new Date(d.when)
+						return Number.isNaN(w) ? 0 : w
+					})
 
-					return {done: false, value: deps}
-				})
+					// The HAFAS APIs return departures up to 59s earlier.
+					// To prevent the collection from "getting stuck",
+					// we increase `when` by a minute.
+					const lastWhen = +new Date(last.when)
+					if (lastWhen === when) when += minute
+					else when = lastWhen
+				} else when += duration * minute
+
+				return {done: false, value: deps}
 			}
 
 			return {next: iterate}

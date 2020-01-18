@@ -39,7 +39,7 @@ fetchDepsTwice()
 .catch(console.error)
 ```
 
-Keep in mind that the example above only works in Node 10+ (and Node 9 with the `--harmony-async-iteration` flag), because it uses [async iteration](http://2ality.com/2017/12/for-await-of-sync-iterables.html).
+Keep in mind that the example above only works in Node 10+, because it uses [async iteration](http://2ality.com/2017/12/for-await-of-sync-iterables.html).
 
 You can also use [Babel](https://babeljs.io) with the [async generators plugin](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-plugin-proposal-async-generator-functions) (currently in [the stage 3 preset](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-preset-stage-3)) to use this syntax. Alternatively, you can write `fetchDepsTwice` without async iteration:
 
