@@ -30,10 +30,10 @@
 		"tap-min": "^2.0.0",
 		"tape": "^4.8.0",
 		"tape-promise": "^4.0.0",
-		"vbb-hafas": "^6.0.0"
+		"vbb-hafas": "^7.0.1"
 	},
 	"peerDependencies": {
-		"hafas-client": "^3 || ^4"
+		"hafas-client": "^3 || ^4 || ^5"
 	},
 	"scripts": {
 		"test": "node test.js | tap-min",

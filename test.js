@@ -22,7 +22,7 @@ const when = DateTime.fromMillis(Date.now(), {
 }).startOf('week').plus({weeks: 1, hours: 10}).toJSDate()
 
 const mockDeparture = (id, t) => ({
-	station: {type: 'station', id, name: 'foo'},
+	stop: {type: 'stop', id, name: 'foo'},
 	when: new Date(t).toISOString()
 })
 const mockDepartures = (id, opt) => Promise.resolve([

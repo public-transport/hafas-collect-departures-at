@@ -32,8 +32,8 @@ const createCollectDeps = (fetchDepartures, opt = {}) => {
 				// todo: warn somehow if 0 departures
 				if (deps.length > 0) {
 					const last = maxBy(deps, (d) => {
-						const w = +new Date(d.when)
-						return Number.isNaN(w) ? 0 : w
+						const w = +new Date(d.when || d.plannedWhen)
+						return Number.isInteger(w) ? w : 0
 					})
 
 					// The HAFAS APIs return departures up to 59s earlier.
