@@ -48,7 +48,6 @@ test('returns an async iterable', (t) => {
 	t.equal(typeof deps, 'object', 'deps should be an obj')
 	t.notOk(Array.isArray(deps), 'deps should not be an array')
 
-	// todo: Symbol.asyncIterator ?
 	const makeIterator = deps[Symbol.asyncIterator]
 	t.equal(typeof makeIterator, 'function', 'deps should have an iterator fn')
 

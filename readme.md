@@ -24,7 +24,9 @@ const createCollectDeps = require('hafas-collect-departures-at')
 
 const fooStation = '900000100001'
 const hafas = createHafas('my-awesome-program')
-const collectDeps = createCollectDeps(hafas.departures)
+const collectDeps = createCollectDeps(hafas.departures, {
+	remarks: true, products: {tram: false}
+})
 const depsAtFoo = collectDeps(fooStation, Date.now())
 
 const fetchDepsTwice = async () => {
@@ -71,6 +73,11 @@ collectWhile(fooStation, Date.now(), shouldPick)
 ```
 
 `collectWhile()` returns a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/promise) that will resolve with an *array of 10* items.
+
+
+## Related
+
+- [`hafas-find-alternative-legs`](https://github.com/derhuerst/hafas-find-alternative-legs) – Given a [`hafas-client`](https://npmjs.com/package/hafas-client) journey, get alternatives for each leg from HAFAS.
 
 
 ## Contributing
