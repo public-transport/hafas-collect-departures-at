@@ -4,8 +4,8 @@
 
 [![npm version](https://img.shields.io/npm/v/hafas-collect-departures-at.svg)](https://www.npmjs.com/package/hafas-collect-departures-at)
 ![ISC-licensed](https://img.shields.io/github/license/public-transport/hafas-collect-departures-at.svg)
-[![chat on gitter](https://badges.gitter.im/derhuerst.svg)](https://gitter.im/derhuerst)
-[![support me on Patreon](https://img.shields.io/badge/support%20me-on%20patreon-fa7664.svg)](https://patreon.com/derhuerst)
+[![support me via GitHub Sponsors](https://img.shields.io/badge/support%20me-donate-fa7664.svg)](https://github.com/sponsors/derhuerst)
+[![chat with me on Twitter](https://img.shields.io/badge/chat%20with%20me-on%20Twitter-1da1f2.svg)](https://twitter.com/derhuerst)
 
 
 ## Installing
@@ -30,7 +30,7 @@ const depsAtFoo = collectDeps(fooStation, Date.now())
 
 const fetchDepsTwice = async () => {
 	let iterations = 0
-	for await (let deps of depsAtFoo) {
+	for await (const deps of depsAtFoo) {
 		if (++iterations > 2) break
 		console.log(deps)
 	}
@@ -38,22 +38,6 @@ const fetchDepsTwice = async () => {
 
 fetchDepsTwice()
 .catch(console.error)
-```
-
-Keep in mind that the example above only works in Node 10+, because it uses [async iteration](http://2ality.com/2017/12/for-await-of-sync-iterables.html).
-
-You can also use [Babel](https://babeljs.io) with the [async generators plugin](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-plugin-proposal-async-generator-functions) (currently in [the stage 3 preset](https://github.com/babel/babel/tree/12ac1bccd7697eb919fe442e35d83ab92e3c882d/packages/babel-preset-stage-3)) to use this syntax. Alternatively, you can write `fetchDepsTwice` without async iteration:
-
-```js
-const fetchDepsTwice = async () => {
-	const iterator = depsAtFoo[Symbol.asyncIterator]()
-	let iterations = 0
-	while (++iterations <= 2) {
-		const result = await iterator.next()
-		const deps = result.value
-		console.log(deps)
-	}
-}
 ```
 
 ### `while` helper
