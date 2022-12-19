@@ -5,12 +5,13 @@ const tapePromise = require('tape-promise').default
 const tape = require('tape')
 const isPromise = require('is-promise')
 const sinon = require('sinon')
+const createVbbHafas = require('vbb-hafas')
 
 const createCollectDeps = require('.')
 
 const test = tapePromise(tape)
 
-const friedrichsstr = '900000100001'
+const friedrichsstr = '900100001'
 
 const minute = 60 * 1000
 // next Monday
@@ -121,6 +122,20 @@ test('increases `when` even if last dep has equal when', async (t) => {
 	}
 
 	const depsAt = createCollectDeps(fetchDeps)(friedrichsstr, initialWhen)
+	let iterations = 0
+	// eslint-disable-next-line no-unused-vars
+	for await (const _ of depsAt) {
+		if (++iterations > 3) break
+	}
+
+	t.end()
+})
+
+test('works with vbb-hafas', async (t) => {
+	const hafas = createVbbHafas('hafas-collect-departures-at')
+	const collectDeps = createCollectDeps(hafas.departures)
+
+	const depsAt = collectDeps(friedrichsstr, when)
 	let iterations = 0
 	// eslint-disable-next-line no-unused-vars
 	for await (const _ of depsAt) {
