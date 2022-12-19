@@ -13,8 +13,6 @@ const test = tapePromise(tape)
 const friedrichsstr = '900000100001'
 
 const minute = 60 * 1000
-const hour = 60 * minute
-const week = 7 * 24 * hour
 // next Monday
 const when = DateTime.fromMillis(Date.now(), {
 	zone: 'Europe/Berlin',
@@ -34,12 +32,12 @@ const mockDepartures = (id, opt) => Promise.resolve([
 const mockedCollectDeps = createCollectDeps(mockDepartures)
 
 test('throws with invalid usage', (t) => {
-	t.throws(() => collectDeps())
-	t.throws(() => collectDeps('123'))
-	t.throws(() => collectDeps(123456789))
-	t.throws(() => collectDeps('123456789', null))
-	t.throws(() => collectDeps('123456789', {}))
-	t.throws(() => collectDeps('123456789', 'tomorrow'))
+	t.throws(() => mockedCollectDeps())
+	t.throws(() => mockedCollectDeps('123'))
+	t.throws(() => mockedCollectDeps(123456789))
+	t.throws(() => mockedCollectDeps('123456789', null))
+	t.throws(() => mockedCollectDeps('123456789', {}))
+	t.throws(() => mockedCollectDeps('123456789', 'tomorrow'))
 	t.end()
 })
 
@@ -102,6 +100,7 @@ test('increases when even if 0 departures', async (t) => {
 	const depsAt = createCollectDeps(fetchDeps)(friedrichsstr, initialWhen)
 
 	let iterations = 0
+	// eslint-disable-next-line no-unused-vars
 	for await (const _ of depsAt) {
 		if (++iterations > 3) break
 	}
@@ -123,6 +122,7 @@ test('increases `when` even if last dep has equal when', async (t) => {
 
 	const depsAt = createCollectDeps(fetchDeps)(friedrichsstr, initialWhen)
 	let iterations = 0
+	// eslint-disable-next-line no-unused-vars
 	for await (const _ of depsAt) {
 		if (++iterations > 3) break
 	}

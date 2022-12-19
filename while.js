@@ -11,7 +11,6 @@ const createCollectWhile = (departures) => {
 		}
 
 		const depsAt = collectDeps(id, when)
-		const iterator = depsAt[Symbol.asyncIterator]()
 		const collected = []
 
 		const loop = async () => {
