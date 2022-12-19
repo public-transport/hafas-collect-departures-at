@@ -1,6 +1,4 @@
-'use strict'
-
-const maxBy = require('lodash.maxby')
+const maxBy = require('lodash/maxBy')
 
 const minute = 60 * 1000
 
