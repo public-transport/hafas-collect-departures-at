@@ -25,8 +25,8 @@
 		"lodash.maxby": "^4.6.0"
 	},
 	"devDependencies": {
-		"is-promise": "^2.1.0",
-		"luxon": "^1.17.1",
+		"is-promise": "^4.0.0",
+		"luxon": "^3.1.1",
 		"sinon": "^8.1.0",
 		"tap-min": "^2.0.0",
 		"tape": "^4.8.0",
