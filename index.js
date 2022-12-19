@@ -27,9 +27,12 @@ const createCollectDeps = (fetchDepartures, hafasOpt = {}, step = 30) => {
 			let when = initialWhen
 
 			const iterate = async (duration = step) => {
-				const deps = await fetchDepartures(id, {
+				const res = await fetchDepartures(id, {
 					...hafasOpt, when: new Date(when), duration
 				})
+				const deps = 'object' === typeof res && Array.isArray(res.departures)
+					? res.departures
+					: res
 
 				// todo: warn somehow if 0 departures
 				if (deps.length > 0) {
