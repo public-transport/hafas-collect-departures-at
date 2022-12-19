@@ -3,7 +3,6 @@
 **Utility to collect departures, using any HAFAS client.**
 
 [![npm version](https://img.shields.io/npm/v/hafas-collect-departures-at.svg)](https://www.npmjs.com/package/hafas-collect-departures-at)
-[![build status](https://api.travis-ci.org/public-transport/hafas-collect-departures-at.svg?branch=master)](https://travis-ci.org/public-transport/hafas-collect-departures-at)
 ![ISC-licensed](https://img.shields.io/github/license/public-transport/hafas-collect-departures-at.svg)
 [![chat on gitter](https://badges.gitter.im/derhuerst.svg)](https://gitter.im/derhuerst)
 [![support me on Patreon](https://img.shields.io/badge/support%20me-on%20patreon-fa7664.svg)](https://patreon.com/derhuerst)
