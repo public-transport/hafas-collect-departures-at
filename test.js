@@ -4,7 +4,7 @@ const {default: tapePromise} = _tapePromise
 import tape from 'tape'
 import isPromise from 'is-promise'
 import sinon from 'sinon'
-import createVbbHafas from 'vbb-hafas'
+import {createVbbHafas} from 'vbb-hafas'
 
 import {createCollectDeps} from './index.js'
 

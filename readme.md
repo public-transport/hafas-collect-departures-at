@@ -18,7 +18,7 @@ npm install hafas-collect-departures-at
 ## Usage
 
 ```js
-import createVbbHafas from 'vbb-hafas'
+import {createVbbHafas} from 'vbb-hafas'
 import {createCollectDeps} from 'hafas-collect-departures-at'
 
 const fooStation = '900000100001'
