@@ -2,6 +2,7 @@
 	"name": "hafas-collect-departures-at",
 	"description": "Utility to collect departures, using any HAFAS client.",
 	"version": "3.1.2",
+	"type": "module",
 	"main": "index.js",
 	"files": [
 		"index.js",
@@ -19,13 +20,13 @@
 	"bugs": "https://github.com/public-transport/hafas-collect-departures-at/issues",
 	"license": "ISC",
 	"engines": {
-		"node": ">=10"
+		"node": ">=18"
 	},
 	"dependencies": {
 		"lodash": "^4.17.21"
 	},
 	"devDependencies": {
-		"eslint": "^7.32.0",
+		"eslint": "^8.30.0",
 		"is-promise": "^4.0.0",
 		"luxon": "^3.1.1",
 		"sinon": "^8.1.0",

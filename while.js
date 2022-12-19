@@ -1,11 +1,9 @@
-'use strict'
+import {createCollectDeps} from './index.js'
 
-const createCollectDeps = require('.')
-
-const createCollectWhile = (departures) => {
+const createCollectDepsWhile = (departures) => {
 	const collectDeps = createCollectDeps(departures)
 
-	const collectWhile = (id, when, predicate) => {
+	const collectDepsWhile = (id, when, predicate) => {
 		if ('function' !== typeof predicate) {
 			throw new Error('predicate must be a function')
 		}
@@ -23,7 +21,9 @@ const createCollectWhile = (departures) => {
 		}
 		return loop()
 	}
-	return collectWhile
+	return collectDepsWhile
 }
 
-module.exports = createCollectWhile
+export {
+	createCollectDepsWhile,
+}

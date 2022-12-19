@@ -1,4 +1,4 @@
-const maxBy = require('lodash/maxBy')
+import maxBy from 'lodash/maxBy.js'
 
 const minute = 60 * 1000
 
@@ -60,4 +60,6 @@ const createCollectDeps = (fetchDepartures, hafasOpt = {}, step = 30) => {
 	return collectDeps
 }
 
-module.exports = createCollectDeps
+export {
+	createCollectDeps,
+}

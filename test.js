@@ -1,13 +1,12 @@
-'use strict'
+import {DateTime} from 'luxon'
+import _tapePromise from 'tape-promise'
+const {default: tapePromise} = _tapePromise
+import tape from 'tape'
+import isPromise from 'is-promise'
+import sinon from 'sinon'
+import createVbbHafas from 'vbb-hafas'
 
-const {DateTime} = require('luxon')
-const tapePromise = require('tape-promise').default
-const tape = require('tape')
-const isPromise = require('is-promise')
-const sinon = require('sinon')
-const createVbbHafas = require('vbb-hafas')
-
-const createCollectDeps = require('.')
+import {createCollectDeps} from './index.js'
 
 const test = tapePromise(tape)
 

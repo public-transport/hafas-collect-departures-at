@@ -18,26 +18,21 @@ npm install hafas-collect-departures-at
 ## Usage
 
 ```js
-const createHafas = require('vbb-hafas')
-const createCollectDeps = require('hafas-collect-departures-at')
+import createVbbHafas from 'vbb-hafas'
+import {createCollectDeps} from 'hafas-collect-departures-at'
 
 const fooStation = '900000100001'
-const hafas = createHafas('my-awesome-program')
+const hafas = createVbbHafas('my-awesome-program')
 const collectDeps = createCollectDeps(hafas.departures, {
 	remarks: true, products: {tram: false}
 })
 const depsAtFoo = collectDeps(fooStation, Date.now())
 
-const fetchDepsTwice = async () => {
-	let iterations = 0
-	for await (const deps of depsAtFoo) {
-		if (++iterations > 2) break
-		console.log(deps)
-	}
+let iterations = 0
+for await (const deps of depsAtFoo) {
+	if (++iterations > 2) break
+	console.log(deps)
 }
-
-fetchDepsTwice()
-.catch(console.error)
 ```
 
 ### `while` helper
@@ -45,14 +40,13 @@ fetchDepsTwice()
 If you don't like to use the async iteration syntax, there's a helper that works like a regular [`while` loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/while):
 
 ```js
-const createCollectWhile = require('hafas-collect-departures-at/while')
+import {createCollectDepsWhile} from 'hafas-collect-departures-at/while.js'
+
+const collectWhile = createCollectDepsWhile(vbb.departures)
 
 const shouldPick = (dep, i) => i < 10
-
-const collectWhile = createCollectWhile(vbb.departures)
-collectWhile(fooStation, Date.now(), shouldPick)
-.then(console.log)
-.catch(console.error)
+const deps = await collectWhile(fooStation, Date.now(), shouldPick)
+console.log(deps)
 ```
 
 `collectWhile()` returns a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/promise) that will resolve with an *array of 10* items.
