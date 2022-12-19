@@ -24,7 +24,10 @@ import {createCollectDeps} from 'hafas-collect-departures-at'
 const fooStation = '900000100001'
 const hafas = createVbbHafas('my-awesome-program')
 const collectDeps = createCollectDeps(hafas.departures, {
-	remarks: true, products: {tram: false}
+	departuresOpts: {
+		remarks: true,
+		products: {tram: false},
+	},
 })
 const depsAtFoo = collectDeps(fooStation, Date.now())
 
