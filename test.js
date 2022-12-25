@@ -19,9 +19,10 @@ const when = DateTime.fromMillis(Date.now(), {
 	locale: 'de-DE',
 }).startOf('week').plus({weeks: 1, hours: 10}).toJSDate()
 
-const mockDeparture = (id, t) => ({
+const mockDeparture = (id, t, cancelled = false) => ({
 	stop: {type: 'stop', id, name: 'foo'},
-	when: new Date(t).toISOString()
+	when: cancelled ? null : new Date(t).toISOString(),
+	plannedWhen: cancelled ? new Date(t).toISOString() : null,
 })
 const mockDepartures = (id, opt) => Promise.resolve([
 	mockDeparture(id, 1 * minute + (+new Date(opt.when))),
@@ -125,6 +126,30 @@ test('increases `when` even if last dep has equal when', async (t) => {
 	// eslint-disable-next-line no-unused-vars
 	for await (const _ of depsAt) {
 		if (++iterations > 3) break
+	}
+
+	t.end()
+})
+
+test('works with the latest departure being cancelled', async (t) => {
+	let call = 0
+	const fetchDeps = async (id, opt) => {
+		if (call++ > 0) {
+			t.ok(opt.when > Date.parse('2023-01-10T10:00+01:00'), 'opt.when is too low')
+			return []
+		}
+		return [
+			mockDeparture(friedrichsstr, '2023-01-10T10:01+01:00', false),
+			mockDeparture(friedrichsstr, '2023-01-10T10:10+01:00', true),
+		]
+	}
+
+	const collectDeps = createCollectDeps(fetchDeps)
+	const depsAt = collectDeps(friedrichsstr, Date.parse('2023-01-10T10:00+01:00'))
+	let iterations = 0
+	// eslint-disable-next-line no-unused-vars
+	for await (const _ of depsAt) {
+		if (++iterations >= 2) break
 	}
 
 	t.end()
